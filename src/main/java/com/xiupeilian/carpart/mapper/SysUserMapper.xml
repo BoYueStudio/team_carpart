@@ -213,4 +213,21 @@
         select * from sys_user where email=#{value}
     </select>
 
+  <select id="findStaff" parameterType="com.xiupeilian.carpart.model.SysUser" resultMap="BaseResultMap">
+    select * from sys_user
+    <where>
+      <if test="username != null &amp; username!= ''">
+        USERNAME = #{username,jdbcType=VARCHAR}
+      </if>
+    </where>
+    order by create_time desc
+  </select>
+  <select id="findStaffById" parameterType="int" resultMap="BaseResultMap">
+    select * from sys_user where id=#{id}
+
+  </select>
+
+  <update id="updatePasswordByLoginName" parameterType="com.xiupeilian.carpart.model.SysUser">
+        update sys_user set password = #{password} where login_name = #{loginName}
+    </update>
 </mapper>

@@ -15,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -102,5 +103,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public Role findRoleByRoleId(Integer roleId) {
         return roleMapper.selectByPrimaryKey(roleId);
+    }
+
+    @Override
+    public SysUser findStaffById(Integer id) {
+        return userMapper.findStaffById(id);
+    }
+
+    @Override
+    public Company findCompanyById(Integer companyId) {
+        return companyMapper.selectByPrimaryKey(companyId);
+    }
+
+    @Override
+    public void updateUserById(SysUser staff) {
+        userMapper.updateByPrimaryKeySelective(staff);
+    }
+    @Override
+    public void updatePasswordByLoginName(SysUser user) {
+        userMapper.updatePasswordByLoginName(user);
+    }
+
+    @Override
+    public List<SysUser> findStaff(SysUser user) {
+        return userMapper.findStaff(user);
     }
 }

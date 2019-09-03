@@ -8,25 +8,37 @@ import com.xiupeilian.carpart.model.Notice;
 import com.xiupeilian.carpart.model.SysUser;
 import com.xiupeilian.carpart.service.DymsnService;
 import com.xiupeilian.carpart.service.MenuService;
+import com.xiupeilian.carpart.service.UserService;
+import com.xiupeilian.carpart.task.MailTask;
+import com.xiupeilian.carpart.util.SHA1Util;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.scheduling.concurrent.ThreadPoolTaskExecutor;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
+import java.util.Random;
 
 @Controller
 @RequestMapping("/index")
 public class IndexController {
-
+    @Autowired
+    private UserService userService;
     @Autowired
     private MenuService menuService;
     @Autowired
     private DymsnService dymsnService;
-
+    @Autowired
+    private JavaMailSenderImpl mailSender;
+    @Autowired
+    private ThreadPoolTaskExecutor executor;
     /**
      * 登录后前往index
      * @return
@@ -92,6 +104,60 @@ public class IndexController {
         request.setAttribute("page",page);
         return "index/notice";
     }
+    @RequestMapping("/toChangePassword")
+    public String toChangePassword() {
 
+        return "index/changePassword";
+
+    }
+
+    @RequestMapping("/checkPassword")
+    public void checkPassword(HttpServletRequest request, HttpServletResponse response, String oldPwd) throws IOException {
+
+        System.out.println(oldPwd);
+
+        String loginName = (String) request.getSession().getAttribute("loginName");
+
+        System.out.println(loginName);
+
+        SysUser user = userService.findUserByLoginName(loginName);
+
+        if (user.getPassword().equals(SHA1Util.encode(new String(oldPwd)))) {
+
+            //生成新密码
+            String password = new Random().nextInt(899999) + 100000 + "";
+            //修改数据库
+            user.setPassword(SHA1Util.encode(password));
+            userService.updateUser(user);
+            //发送邮件到数据库
+            SimpleMailMessage message = new SimpleMailMessage();
+            message.setFrom("wang_shuiyi@sina.com");
+            message.setTo(user.getEmail());
+            message.setSubject("修配连汽配市场密码找回功能:");
+            message.setText("您的新密码是:" + password);
+            // mailSender.send(message);
+            MailTask mailTask = new MailTask(mailSender, message);
+            //让线程池去执行该任务
+            executor.execute(mailTask);
+            response.getWriter().write("2");
+
+        } else {
+
+            response.getWriter().write("1");
+
+        }
+
+    }
+
+    @RequestMapping("/changePassword")
+    public void changePassword(HttpServletRequest request, HttpServletResponse response, String newPwd) throws IOException {
+        String loginName = (String) request.getSession().getAttribute("loginName");
+        SysUser user = new SysUser();
+        user.setLoginName(loginName);
+        user.setPassword(SHA1Util.encode(new String(newPwd)));
+        userService.updatePasswordByLoginName(user);
+        response.getWriter().write("1");
+
+    }
 
 }

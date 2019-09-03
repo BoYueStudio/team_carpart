@@ -7,7 +7,6 @@
     <file url="file://$PROJECT_DIR$/src/main/java/com/xiupeilian/carpart/controller/PublicItemsController.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xiupeilian/carpart/service" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xiupeilian/carpart/servlet" charset="GBK" />
-    <file url="file://$PROJECT_DIR$/src/main/java/com/xiupeilian/carpart/session/LoginController.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xiupeilian/carpart/session/UserRealm.java" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xiupeilian/carpart/task" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/java/com/xiupeilian/carpart/util/ImageUtil.java" charset="GBK" />
@@ -32,6 +31,9 @@
     <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/login/phoneLogin.jsp" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/login/register.jsp" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/public" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/staff/addStaff.jsp" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/staff/editStaff.jsp" charset="GBK" />
+    <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/staff/staffList.jsp" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/staff/staffList.jsp" charset="GBK" />
     <file url="file://$PROJECT_DIR$/src/main/webapp/js/bootstrap.min.js" charset="GBK" />
     <file url="PROJECT" charset="GBK" />

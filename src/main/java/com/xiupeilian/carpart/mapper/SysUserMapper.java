@@ -19,4 +19,10 @@ public interface SysUserMapper extends BaseMapper<SysUser> {
     SysUser findUserByPhone(String telnum);
 
     SysUser findUserByEmail(String email);
+
+    SysUser findStaffById(Integer id);
+
+    void updatePasswordByLoginName(SysUser user);
+
+    List<SysUser> findStaff(SysUser user);
 }
